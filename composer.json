@@ -1,0 +1,16 @@
+{
+  "name": "pragmapartners/pragma-layouts",
+  "description": "a collection of drupal components",
+  "type": "drupal-module",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Brynn Briedis",
+      "email": "brynn@pragma.com.au"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "drupal/core": "^10.3 || ^11.0"
+  }
+}

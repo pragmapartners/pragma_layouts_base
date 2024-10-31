@@ -1,0 +1,41 @@
+{#
+/**
+ * @file
+ * Default implementation for a custom layout bento section.
+ *
+ * Available variables:
+ * - content: The content for this layout.
+ * - attributes: HTML attributes for the layout <div>.
+ * - region_attributes: HTML attributes for the region <div>.
+ * - settings: An array of configured settings for the layout.
+ *
+ * @ingroup themeable
+ */
+#}
+
+{% set classes = [
+  'bento-grid',
+  settings.extra_classes ? settings.extra_classes|clean_class,
+] %}
+
+{% if content %}
+  <div{{ attributes.addClass(classes) }}>
+    {% if content.largesection %}
+      <div {{ region_attributes.largesection }}>
+        {{ content.largesection }}
+      </div>
+    {% endif %}
+    <div class="bento-group">
+      {% if content.smallsection1 %}
+      <div {{ region_attributes.smallsection1 }}>
+        {{ content.smallsection1 }}
+      </div>
+    {% endif %}
+    {% if content.smallsection2 %}
+      <div {{ region_attributes.smallsection2 }}>
+        {{ content.smallsection2 }}
+      </div>
+    {% endif %}
+    </div>
+  </div>
+{% endif %}

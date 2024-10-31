@@ -1,0 +1,28 @@
+.layout--bento {
+  display: flex;
+  gap:  1rem;
+  padding: 1rem;
+  outline: solid 1px orange;
+}
+
+.layout--bento > .layout__region {
+  padding: 1rem;
+  outline: solid 1px orange;
+}
+
+.layout--bento > .layout__region--main {
+  flex-basis: 66%;
+}
+
+.layout--bento > .layout__region--sidebar {
+  flex-basis: 33%;
+}
+
+@media all and (max-width: 850px) {
+  .layout--bento {
+    flex-direction: column;
+  }
+  .layout--bento > .layout__region {
+    flex-basis: auto;
+  }
+}

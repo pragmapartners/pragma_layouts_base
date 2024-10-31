@@ -1,0 +1,54 @@
+{#
+/**
+ * @file
+ * Default implementation for a custom layout bento section.
+ *
+ * Available variables:
+ * - content: The content for this layout.
+ * - attributes: HTML attributes for the layout <div>.
+ * - region_attributes: HTML attributes for the region <div>.
+ * - settings: An array of configured settings for the layout.
+ *
+ * @ingroup themeable
+ */
+#}
+
+{% set classes = [
+  'column-layout',
+  'column-layout--quad',
+] %}
+
+{% if content.media %}
+	<div class="layout--image-wrapper">
+		{{ content.media }}
+	</div>
+{% endif %}
+
+{% if content.section_title %}
+	<h4 class="section-title" {{ attributes }}>{{ content.section_title }}</h4>
+{% endif %}
+
+{% if content %}
+	<div{{attributes.addClass(classes)}}>
+		{% if content.first %}
+			<div {{ region_attributes.first.addClass('col') }}>
+				{{ content.first }}
+			</div>
+		{% endif %}
+		{% if content.second %}
+			<div {{ region_attributes.second.addClass('col') }}>
+				{{ content.second }}
+			</div>
+		{% endif %}
+		{% if content.third %}
+			<div {{ region_attributes.third.addClass('col') }}>
+				{{ content.third }}
+			</div>
+		{% endif %}
+		{% if content.fourth %}
+			<div {{ region_attributes.fourth.addClass('col') }}>
+				{{ content.fourth }}
+			</div>
+		{% endif %}
+	</div>
+{% endif %}

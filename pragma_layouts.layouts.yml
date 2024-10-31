@@ -1,0 +1,134 @@
+pragma_layouts_bento:
+  label: "bento"
+  category: "Pragma layouts"
+  class: '\Drupal\pragma_layouts\Plugin\Layout\Bento'
+  path: layouts/bento
+  template: bento
+  library: pragma_layouts/bento
+  regions:
+    largesection:
+      label: Large section
+    smallsection1:
+      label: Small section 1
+    smallsection2:
+      label: Small section 2
+  default_region: largesection
+  icon_map:
+    - [largesection, smallsection1]
+    - [largesection, smallsection2]
+
+pragma_layouts_onecol:
+  label: "One columns"
+  category: "Pragma layouts"
+  class: '\Drupal\pragma_layouts\Plugin\Layout\SingleColumn'
+  path: layouts/onecol
+  template: onecol
+  library: pragma_layouts/onecol
+  regions:
+    first:
+      label: Column
+  default_region: first
+  icon_map:
+    - [first]
+
+pragma_layouts_twocol:
+  label: "Two columns"
+  category: "Pragma layouts"
+  class: '\Drupal\pragma_layouts\Plugin\Layout\DoubleColumn'
+  path: layouts/twocol
+  template: twocol
+  library: pragma_layouts/twocol
+  regions:
+    first:
+      label: First column
+    second:
+      label: Second column
+  default_region: first
+  icon_map:
+    - [first, second]
+
+pragma_layouts_threecol:
+  label: "Three columns"
+  category: "Pragma layouts"
+  class: '\Drupal\pragma_layouts\Plugin\Layout\TripleColumn'
+  path: layouts/threecol
+  template: threecol
+  library: pragma_layouts/threecol
+  regions:
+    first:
+      label: First column
+    second:
+      label: Second column
+    third:
+      label: Third column
+  default_region: first
+  icon_map:
+    - [first, second, third]
+
+pragma_layouts_fourcol:
+  label: "Four columns"
+  category: "Pragma layouts"
+  class: '\Drupal\pragma_layouts\Plugin\Layout\QuadColumn'
+  path: layouts/fourcol
+  template: fourcol
+  library: pragma_layouts/fourcol
+  regions:
+    first:
+      label: First column
+    second:
+      label: Second column
+    third:
+      label: Third column
+    fourth:
+      label: Fourth column
+  default_region: first
+  icon_map:
+    - [first, second, third, fourth]
+
+pragma_layouts_tab_onecol:
+  label: "Tabs single column"
+  category: "Pragma tab layouts"
+  class: '\Drupal\pragma_layouts\Plugin\Layout\TabSingleColumn'
+  path: layouts/tab_onecol
+  template: onecol
+  library: pragma_layouts/tab_onecol
+  regions:
+    first:
+      label: Column
+  default_region: first
+  icon_map:
+    - [first]
+
+pragma_layouts_tab_twocol:
+  label: "Tabs double column"
+  category: "Pragma tab layouts"
+  class: '\Drupal\pragma_layouts\Plugin\Layout\TabDoubleColumn'
+  path: layouts/tab_twocol
+  template: tab_twocol
+  library: pragma_layouts/tab_twocol
+  regions:
+    first:
+      label: First column
+    second:
+      label: Second column
+  default_region: first
+  icon_map:
+    - [first, second]
+
+pragma_layouts_tab_threecol:
+  label: "Tab triple column"
+  category: "Pragma tab layouts"
+  class: '\Drupal\pragma_layouts\Plugin\Layout\TabTripleColumn'
+  path: layouts/tab_threecol
+  template: tab_threecol
+  library: pragma_layouts/tab_threecol
+  regions:
+    first:
+      label: First column
+    second:
+      label: Second column
+    third:
+      label: Third column
+  default_region: first
+  icon_map:
+    - [first, second, third]

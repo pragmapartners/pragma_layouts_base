@@ -1,0 +1,136 @@
+/*Admin styling*/
+.gin--edit-form {
+  [data-type="layout_section"],
+  .paragraph {
+    background-color: var(--background-color, transparent);
+    & :is(h1, h2, h3, h4, h5, h6, p) {
+      color: var(--text-color);
+    }
+    &:has(> [data-background-color="green"]) {
+      --background-color: var(--boral-green, #00a94f);
+      --text-color: var(--white, #fff);
+    }
+    &:has(> [data-background-color="lime"]) {
+      --background-color: var(--boral-lime-60, #cae289);
+      --text-color: #000;
+    }
+    &:has(> [data-background-color="gray"]) {
+      --background-color: var(--gray-100, #f0f0f0);
+      --text-color: #000;
+    }
+    &:has(> [data-background-color="charcoal"]) {
+      --background-color: var(--boral-charcoal, #5a666f);
+      --text-color: var(--white, #fff);
+    }
+    &:has(> [data-section-padding="nil"]) {
+      --col-layout-padding-block: var(--size-0, 1rem);
+      &[data-section-title="TRUE"] {
+        --col-layout-padding-block: var(--size-10, 2.5rem) var(--size-16, 1rem);
+      }
+    }
+    &:has(> [data-section-padding="sm"]) {
+      --col-layout-padding-block: var(--size-16, 1.5rem);
+      &[data-section-title="TRUE"] {
+        --col-layout-padding-block: var(--size-10, 2.5rem) var(--size-16, 1.5rem);
+      }
+    }
+    &:has(> [data-section-padding="md"]) {
+      --col-layout-padding-block: var(--size-20, 2rem);
+      &[data-section-title="TRUE"] {
+        --col-layout-padding-block: var(--size-10, 2.5rem) var(--size-20, 2rem);
+      }
+    }
+    &:has(> [data-section-padding="lg"]) {
+      --col-layout-padding-block: var(--size-22, 4rem);
+      &[data-section-title="TRUE"] {
+        --col-layout-padding-block: var(--size-10, 2.5rem) var(--size-22, 4rem);
+      }
+    }
+    &:has(> [data-section-padding="xl"]) {
+      --col-layout-padding-block: var(--size-25, 5rem);
+      &[data-section-title="TRUE"] {
+        --col-layout-padding-block: var(--size-10, 2.5rem) var(--size-25, 5rem);
+      }
+    }
+  }
+}
+.paragraph {
+  &.paragraph--type--layout-section {
+    padding-block: var(--col-layout-padding-block);
+    .paragraph {
+      padding-block: 0;
+    }
+  }
+  &:has(> [data-section-padding="nil"]) {
+    --col-layout-padding-block: var(--size-4, 1rem);
+  }
+  &:has(> [data-section-padding="sm"]) {
+    --col-layout-padding-block: var(--size-5, 1.5rem);
+  }
+  &:has(> [data-section-padding="md"]) {
+    --col-layout-padding-block: var(--size-8, 2rem);
+  }
+  &:has(> [data-section-padding="lg"]) {
+    --col-layout-padding-block: var(--size-16, 4rem);
+  }
+  &:has(> [data-section-padding="xl"]) {
+    --col-layout-padding-block: var(--size-20, 5rem);
+  }
+}
+.column-layout {
+  display: flex;
+  flex-wrap: wrap;
+
+  column-gap: var(--col-layout-col-gap);
+  row-gap: var(--col-layout-row-gap);
+  &[data-col-gap="sm"] {
+    --col-layout-col-gap: var(--size-4, 1rem);
+  }
+  &[data-col-gap="md"] {
+    --col-layout-col-gap: var(--size-6, 1.5rem);
+  }
+  &[data-col-gap="lg"] {
+    --col-layout-col-gap: var(--size-12, 3rem);
+  }
+  &[data-row-gap="sm"] {
+    --col-layout-row-gap: var(--size-4, 1rem);
+  }
+  &[data-row-gap="md"] {
+    --col-layout-row-gap: var(--size-6, 1.5rem);
+  }
+  &[data-row-gap="lg"] {
+    --col-layout-row-gap: var(--size-12, 3rem);
+  }
+  &[data-horizontal-alignment="start"] {
+    align-items: flex-start;
+  }
+  &[data-horizontal-alignment="center"] {
+    align-items: center;
+  }
+  &[data-horizontal-alignment="end"] {
+    align-items: flex-end;
+  }
+
+  .col {
+    display: flex;
+    flex-direction: column;
+    column-gap: var(--col-layout-col-gap);
+    row-gap: var(--col-layout-row-gap);
+  }
+}
+
+/* .section-title[data-section-title="TRUE"] {
+  padding-block: var(--col-layout-padding-block);
+  &[data-section-padding="sm"] {
+    --col-layout-padding-block: var(--size-16, 4rem) var(--size-5, 1.25rem);
+  }
+  &[data-section-padding="md"] {
+    --col-layout-padding-block: var(--size-20, 5rem) var(--size-5, 1.25rem);
+  }
+  &[data-section-padding="lg"] {
+    --col-layout-padding-block: var(--size-22, 5.5rem) var(--size-5, 1.25rem);
+  }
+  &[data-section-padding="xl"] {
+    --col-layout-padding-block: var(--size-25, 6.25rem) var(--size-5, 1.25rem);
+  }
+} */

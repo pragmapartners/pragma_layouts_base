@@ -50,7 +50,7 @@ class SingleColumn extends LayoutBase
    */
   public function submitConfigurationForm(array &$form, FormStateInterface $form_state)
   {
-    $this->configuration['extra_classes'] = $form_state->getValue('extra_classes');
+    $this->configuration['extra_classes'] = (string) $form_state->getValue('extra_classes');
   }
 
   /**
@@ -60,7 +60,9 @@ class SingleColumn extends LayoutBase
   {
     $build = parent::build($regions);
 
-    $build['#attributes']['class'] = $this->configuration['extra_classes'];
+    // Ensure extra_classes is always treated as an array of classes.
+    $extra_classes = is_string($this->configuration['extra_classes']) ? explode(' ', $this->configuration['extra_classes']) : [];
+    $build['#attributes']['class'] = array_merge($build['#attributes']['class'] ?? [], $extra_classes);
 
     return $build;
   }

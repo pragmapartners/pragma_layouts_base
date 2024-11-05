@@ -33,6 +33,8 @@ class LayoutBase extends LayoutDefault implements PluginFormInterface
   public function buildConfigurationForm(array $form, FormStateInterface $form_state)
   {
     $configuration = $this->getConfiguration();
+
+    var_dump($configuration);
     // add a section title field
     $form['section_title'] = [
       '#type' => 'textfield',
@@ -93,11 +95,12 @@ class LayoutBase extends LayoutDefault implements PluginFormInterface
    */
   public function submitConfigurationForm(array &$form, FormStateInterface $form_state)
   {
-    $this->configuration['section_title'] = $form_state->getValue('section_title');
-    $this->configuration['extra_classes'] = $form_state->getValue('extra_classes');
-    $this->configuration['background_color'] = $form_state->getValue('background_color');
-    $this->configuration['background_image'] = $form_state->getValue('background_image');
-    $this->configuration['section_padding'] = $form_state->getValue('section_padding');
+    // Cast values explicitly to expected types
+    $this->configuration['section_title'] = (string) $form_state->getValue('section_title');
+    $this->configuration['extra_classes'] = (string) $form_state->getValue('extra_classes');
+    $this->configuration['background_color'] = (string) $form_state->getValue('background_color');
+    $this->configuration['background_image'] = is_numeric($form_state->getValue('background_image')) ? (int) $form_state->getValue('background_image') : NULL;
+    $this->configuration['section_padding'] = (string) $form_state->getValue('section_padding');
   }
 
   /**
@@ -107,24 +110,33 @@ class LayoutBase extends LayoutDefault implements PluginFormInterface
   {
     $build = parent::build($regions);
 
-    if ($this->configuration['background_image']) {
+    // Validate that background_image is set and a valid media entity ID
+    if (!empty($this->configuration['background_image']) && is_numeric($this->configuration['background_image'])) {
       $media = Media::load($this->configuration['background_image']);
-      $build['media'] = [
-        '#theme' => 'image_style',
-        '#style_name' => 'large',
-        '#uri' => $media->field_media_image->entity->getFileUri(),
-      ];
+      if ($media && $media->hasField('field_media_image') && $media->field_media_image->entity) {
+        $build['media'] = [
+          '#theme' => 'image_style',
+          '#style_name' => 'large',
+          '#uri' => $media->field_media_image->entity->getFileUri(),
+        ];
+      }
     }
-    if ($this->configuration['section_title']) {
+
+    // Ensure section title is non-empty before adding it
+    if (!empty($this->configuration['section_title'])) {
       $build['section_title'] = [
         '#type' => 'markup',
         '#markup' => $this->configuration['section_title'],
       ];
     }
-    $build['#attributes']['data-section-title'] = $this->configuration['section_title'] ? "TRUE" : "FALSE";
-    $build['#attributes']['class'] = $this->configuration['extra_classes'];
-    $build['#attributes']['data-background-color'] = $this->configuration['background_color'];
-    $build['#attributes']['data-section-padding'] = $this->configuration['section_padding'];
+
+    // Ensure extra_classes is a string before using explode
+    $extra_classes = is_string($this->configuration['extra_classes']) ? $this->configuration['extra_classes'] : '';
+    $build['#attributes']['class'] = explode(' ', $extra_classes);
+
+    // Set additional attributes safely
+    $build['#attributes']['data-background-color'] = $this->configuration['background_color'] ?? 'nil';
+    $build['#attributes']['data-section-padding'] = $this->configuration['section_padding'] ?? 'md';
 
     return $build;
   }

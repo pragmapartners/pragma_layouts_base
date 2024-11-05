@@ -34,7 +34,6 @@ class LayoutBase extends LayoutDefault implements PluginFormInterface
   {
     $configuration = $this->getConfiguration();
 
-    var_dump($configuration);
     // add a section title field
     $form['section_title'] = [
       '#type' => 'textfield',

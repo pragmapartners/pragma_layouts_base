@@ -1,9 +1,0 @@
-.column-layout.column-layout--single {
-  flex-direction: column;
-  flex-wrap: nowrap;
-  flex: 1;
-  .col {
-    display: flex;
-    flex-direction: column;
-  }
-}

@@ -23,18 +23,3 @@ fourcol:
     component:
       css/base.css: {}
       layouts/fourcol/fourcol.css: {}
-tab_onecol:
-  css:
-    component:
-      css/base.css: {}
-      layouts/tab_onecol/onecol.css: {}
-tab_twocol:
-  css:
-    component:
-      css/base.css: {}
-      layouts/tab_twocol/tab-twocol.css: {}
-tab_threecol:
-  css:
-    component:
-      css/base.css: {}
-      layouts/tab_threecol/tab-threecol.css: {}

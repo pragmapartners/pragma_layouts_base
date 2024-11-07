@@ -2,4 +2,4 @@ name: "pragma layouts"
 type: module
 description: "Basic layouts for Drupal's Layout API"
 package: "Pragma"
-core_version_requirement: ^10
+core_version_requirement: ^10 || ^11

@@ -31,7 +31,7 @@
 {% if content %}
 	<div{{attributes.addClass(classes)}}>
 		{% if content.first %}
-			<div {{ region_attributes.first.addClass('col') }}>
+			<div {{ region_attributes.first.addClass(settings.fullwidth ? 'fullwidth col' : 'col') }}>
 				{{ content.first }}
 			</div>
 		{% endif %}

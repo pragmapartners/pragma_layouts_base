@@ -8,11 +8,10 @@ use Drupal\Core\Plugin\PluginFormInterface;
 use Drupal\media\Entity\Media;
 
 /**
- * {@inheritdoc}
+ * Provides a base layout plugin with form configuration capabilities.
  */
 class LayoutBase extends LayoutDefault implements PluginFormInterface
 {
-
   /**
    * {@inheritdoc}
    */
@@ -24,6 +23,7 @@ class LayoutBase extends LayoutDefault implements PluginFormInterface
       'background_image' => NULL,
       'section_padding' => 'md',
       'section_title' => '',
+      'fullwidth' => FALSE,
     ];
   }
 
@@ -34,11 +34,15 @@ class LayoutBase extends LayoutDefault implements PluginFormInterface
   {
     $configuration = $this->getConfiguration();
 
-    // add a section title field
     $form['section_title'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Section title'),
       '#default_value' => $configuration['section_title'],
+    ];
+    $form['fullwidth'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Full width'),
+      '#default_value' => $configuration['fullwidth'],
     ];
     $form['background_color'] = [
       '#type' => 'select',
@@ -78,6 +82,7 @@ class LayoutBase extends LayoutDefault implements PluginFormInterface
       ],
       '#description' => $this->t('The amount of space around the row, this will extend the background color'),
     ];
+
     return $form;
   }
 
@@ -86,7 +91,7 @@ class LayoutBase extends LayoutDefault implements PluginFormInterface
    */
   public function validateConfigurationForm(array &$form, FormStateInterface $form_state)
   {
-    // any additional form validation that is required
+    // Add any form validation logic if necessary.
   }
 
   /**
@@ -94,8 +99,9 @@ class LayoutBase extends LayoutDefault implements PluginFormInterface
    */
   public function submitConfigurationForm(array &$form, FormStateInterface $form_state)
   {
-    // Cast values explicitly to expected types
+    // Explicitly cast and save values to ensure correct data types
     $this->configuration['section_title'] = (string) $form_state->getValue('section_title');
+    $this->configuration['fullwidth'] = (bool) $form_state->getValue('fullwidth');
     $this->configuration['extra_classes'] = (string) $form_state->getValue('extra_classes');
     $this->configuration['background_color'] = (string) $form_state->getValue('background_color');
     $this->configuration['background_image'] = is_numeric($form_state->getValue('background_image')) ? (int) $form_state->getValue('background_image') : NULL;
@@ -129,13 +135,18 @@ class LayoutBase extends LayoutDefault implements PluginFormInterface
       ];
     }
 
+    if ($this->configuration['fullwidth']) {
+      $build['#attributes']['class'][] = 'fullwidth';
+    }
+
     // Ensure extra_classes is a string before using explode
     $extra_classes = is_string($this->configuration['extra_classes']) ? $this->configuration['extra_classes'] : '';
-    $build['#attributes']['class'] = explode(' ', $extra_classes);
+    $build['#attributes']['class'] = array_merge($build['#attributes']['class'] ?? [], explode(' ', $extra_classes));
 
     // Set additional attributes safely
     $build['#attributes']['data-background-color'] = $this->configuration['background_color'] ?? 'nil';
     $build['#attributes']['data-section-padding'] = $this->configuration['section_padding'] ?? 'md';
+    $build['#fullwidth'] = $this->configuration['fullwidth'];
 
     return $build;
   }

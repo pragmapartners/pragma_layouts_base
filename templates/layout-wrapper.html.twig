@@ -12,15 +12,14 @@
  * @ingroup themeable
  */
 #}
+{% set section_classes = [
+  'section-wrapper',
+] %}
 
-<div{{attributes}}>
-	{% if content %}
-		<div class="columns-wrapper">
-			{% if content.first %}
-				<div {{ region_attributes.first.addClass('col') }}>
-					{{ content.first }}
-				</div>
-			{% endif %}
+<section{{layout_attributes.addClass(section_classes)}}>
+	{% block layout %}
+		<div{{sub_attibutes}}>
+			{{content}}
 		</div>
-	{% endif %}
-</div>
+	{% endblock %}
+</section>

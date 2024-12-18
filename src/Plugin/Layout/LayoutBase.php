@@ -8,10 +8,11 @@ use Drupal\Core\Plugin\PluginFormInterface;
 use Drupal\media\Entity\Media;
 
 /**
- * Provides a base layout plugin with form configuration capabilities.
+ * {@inheritdoc}
  */
 class LayoutBase extends LayoutDefault implements PluginFormInterface
 {
+
   /**
    * {@inheritdoc}
    */
@@ -23,7 +24,7 @@ class LayoutBase extends LayoutDefault implements PluginFormInterface
       'background_image' => NULL,
       'section_padding' => 'md',
       'section_title' => '',
-      'fullwidth' => FALSE,
+      'full_width' => FALSE,
     ];
   }
 
@@ -34,45 +35,32 @@ class LayoutBase extends LayoutDefault implements PluginFormInterface
   {
     $configuration = $this->getConfiguration();
 
-    $form['section_title'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Section title'),
-      '#default_value' => $configuration['section_title'],
+    // createa tab for the layout settings
+    $form['layout_settings'] = [
+      '#type' => 'vertical_tabs',
+      '#default_tab' => 'edit-general',
     ];
-    $form['fullwidth'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Full width'),
-      '#default_value' => $configuration['fullwidth'],
+
+    // setup tabs for the layout settings
+    $form['general'] = [
+      '#type' => 'details',
+      '#title' => $this->t('General'),
+      '#group' => 'layout_settings',
+      '#open' => TRUE,
     ];
-    $form['background_color'] = [
-      '#type' => 'select',
-      '#title' => $this->t('Background color'),
-      '#default_value' => $configuration['background_color'],
-      '#options' => [
-        "nil" => $this->t("None"),
-        "gray" => $this->t("Gray"),
-        "charcoal" => $this->t("Charcoal"),
-        "lime" => $this->t("Lime"),
-        "green" => $this->t("Green"),
-      ],
-      '#description' => $this->t('The background color of the layout.'),
+    $form['decoration'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Decoration'),
+      '#group' => 'layout_settings',
     ];
-    $form['background_image'] = [
-      '#type' => 'media_library',
-      '#allowed_bundles' => ['image'],
-      '#title' => $this->t('Upload your image'),
-      '#default_value' => $configuration['background_image'],
-      '#description' => $this->t('Upload or select your profile image.'),
-    ];
-    $form['extra_classes'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Extra classes'),
-      '#default_value' => $configuration['extra_classes'],
-    ];
-    $form['section_padding'] = [
+
+    /**
+     * General settings
+     */
+    $form['general']['section_padding'] = [
       '#type' => 'select',
       '#title' => $this->t('Section padding'),
-      '#default_value' => $configuration['section_padding'],
+      '#default_value' => $configuration['general']['section_padding'],
       '#options' => [
         "nil" => $this->t("None"),
         "sm" => $this->t("Small"),
@@ -81,6 +69,34 @@ class LayoutBase extends LayoutDefault implements PluginFormInterface
         "xl" => $this->t("Extra large"),
       ],
       '#description' => $this->t('The amount of space around the row, this will extend the background color'),
+    ];
+    $form['general']['extra_classes'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Extra classes'),
+      '#default_value' => $configuration['general']['extra_classes'],
+    ];
+
+    /**
+     * Decoration settings
+     */
+    $form['decoration']['full_width'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Full width'),
+      '#default_value' => $configuration['decoration']['full_width'],
+      '#description' => $this->t('Make the layout full bleed.'),
+    ];
+    $form['decoration']['background_color'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Background color'),
+      '#default_value' => $configuration['decoration']['background_color'],
+      '#options' => [
+        "nil" => $this->t("None"),
+        "gray" => $this->t("Gray"),
+        "charcoal" => $this->t("Charcoal"),
+        "lime" => $this->t("Lime"),
+        "green" => $this->t("Green"),
+      ],
+      '#description' => $this->t('The background color of the layout.'),
     ];
 
     return $form;
@@ -91,7 +107,7 @@ class LayoutBase extends LayoutDefault implements PluginFormInterface
    */
   public function validateConfigurationForm(array &$form, FormStateInterface $form_state)
   {
-    // Add any form validation logic if necessary.
+    // any additional form validation that is required
   }
 
   /**
@@ -99,13 +115,10 @@ class LayoutBase extends LayoutDefault implements PluginFormInterface
    */
   public function submitConfigurationForm(array &$form, FormStateInterface $form_state)
   {
-    // Explicitly cast and save values to ensure correct data types
-    $this->configuration['section_title'] = (string) $form_state->getValue('section_title');
-    $this->configuration['fullwidth'] = (bool) $form_state->getValue('fullwidth');
-    $this->configuration['extra_classes'] = (string) $form_state->getValue('extra_classes');
-    $this->configuration['background_color'] = (string) $form_state->getValue('background_color');
-    $this->configuration['background_image'] = is_numeric($form_state->getValue('background_image')) ? (int) $form_state->getValue('background_image') : NULL;
-    $this->configuration['section_padding'] = (string) $form_state->getValue('section_padding');
+    $this->configuration['general']['extra_classes'] = (string) $form_state->getValue(['general', 'extra_classes']);
+    $this->configuration['general']['section_padding'] = (string) $form_state->getValue(['general', 'section_padding']);
+    $this->configuration['decoration']['background_color'] = (string) $form_state->getValue(['decoration', 'background_color']);
+    $this->configuration['decoration']['full_width'] = (bool) $form_state->getValue(['decoration', 'full_width']);
   }
 
   /**
@@ -115,38 +128,19 @@ class LayoutBase extends LayoutDefault implements PluginFormInterface
   {
     $build = parent::build($regions);
 
-    // Validate that background_image is set and a valid media entity ID
-    if (!empty($this->configuration['background_image']) && is_numeric($this->configuration['background_image'])) {
-      $media = Media::load($this->configuration['background_image']);
-      if ($media && $media->hasField('field_media_image') && $media->field_media_image->entity) {
-        $build['media'] = [
-          '#theme' => 'image_style',
-          '#style_name' => 'large',
-          '#uri' => $media->field_media_image->entity->getFileUri(),
-        ];
-      }
-    }
-
-    // Ensure section title is non-empty before adding it
-    if (!empty($this->configuration['section_title'])) {
-      $build['section_title'] = [
-        '#type' => 'markup',
-        '#markup' => $this->configuration['section_title'],
-      ];
-    }
-
-    if ($this->configuration['fullwidth']) {
-      $build['#attributes']['class'][] = 'fullwidth';
-    }
-
     // Ensure extra_classes is a string before using explode
-    $extra_classes = is_string($this->configuration['extra_classes']) ? $this->configuration['extra_classes'] : '';
-    $build['#attributes']['class'] = array_merge($build['#attributes']['class'] ?? [], explode(' ', $extra_classes));
+    $extra_classes = is_string($this->configuration['general']['extra_classes']) ? $this->configuration['general']['extra_classes'] : '';
+    $build['#attributes']['class'] = explode(' ', $extra_classes);
 
     // Set additional attributes safely
-    $build['#attributes']['data-background-color'] = $this->configuration['background_color'] ?? 'nil';
-    $build['#attributes']['data-section-padding'] = $this->configuration['section_padding'] ?? 'md';
-    $build['#fullwidth'] = $this->configuration['fullwidth'];
+    $build['#attributes']['data-background-color'] = $this->configuration['decoration']['background_color'] ?? null;
+    $build['#attributes']['data-section-padding'] = $this->configuration['general']['section_padding'] ?? 'md';
+
+    $this->configuration['decoration']['full_width'] ? $build['#attributes']['data-full-width'] = TRUE : null;
+
+
+    $build['#attributes']['class'][] = 'layout column-layout';
+    $build['#attributes']['class'][] = 'column-layout--' . $build['#layout']->get('classname');
 
     return $build;
   }

@@ -27,12 +27,6 @@ class SingleColumn extends LayoutBase
   public function buildConfigurationForm(array $form, FormStateInterface $form_state)
   {
     $form = parent::buildConfigurationForm($form, $form_state);
-    $configuration = $this->getConfiguration();
-    $form['extra_classes'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Extra classes'),
-      '#default_value' => $configuration['extra_classes'],
-    ];
 
     return $form;
   }
@@ -48,21 +42,9 @@ class SingleColumn extends LayoutBase
   /**
    * {@inheritdoc}
    */
-  public function submitConfigurationForm(array &$form, FormStateInterface $form_state)
-  {
-    $this->configuration['extra_classes'] = (string) $form_state->getValue('extra_classes');
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function build(array $regions)
   {
     $build = parent::build($regions);
-
-    // Ensure extra_classes is always treated as an array of classes.
-    $extra_classes = is_string($this->configuration['extra_classes']) ? explode(' ', $this->configuration['extra_classes']) : [];
-    $build['#attributes']['class'] = array_merge($build['#attributes']['class'] ?? [], $extra_classes);
 
     return $build;
   }

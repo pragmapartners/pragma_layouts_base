@@ -1,0 +1,34 @@
+<?php
+
+/**
+ * Implements hook_theme().
+ */
+function pragma_layouts_theme($existing, $type, $theme, $path)
+{
+  return [
+    'layout_wrapper' => [
+      'variables' => [
+        'content' => NULL,
+        'layout_attributes' => [],
+        'attributes' => [],
+        'region_attributes' => [],
+        'settings' => [],
+        'sub_attibutes' => [],
+      ],
+      'template' => 'layout-wrapper',
+      'path' => $path . '/templates',
+    ],
+  ];
+}
+
+// preprocess the container template in layout builder
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function pragma_layouts_preprocess_container(&$variables)
+{
+  if (isset($variables['element']['layout-builder__section'])) {
+    $variables['attributes']['class'][] = 'fullwidth';
+  }
+}

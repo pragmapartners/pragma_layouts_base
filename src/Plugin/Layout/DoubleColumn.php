@@ -62,7 +62,9 @@ class DoubleColumn extends MultiColumnBase
    */
   public function submitConfigurationForm(array &$form, FormStateInterface $form_state)
   {
-    $this->configuration['col_widths'] = $form_state->getValue('col_widths');
+    // submit parent configuration
+    $this->configuration['col_widths'] = (string) $form_state->getValue('col_widths');
+    parent::submitConfigurationForm($form, $form_state);
   }
 
   /**

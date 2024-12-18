@@ -1,15 +1,8 @@
 .column-layout--quad {
-  flex-wrap: wrap;
-  container: column/inline-size;
-}
-
-.column-layout--quad .col {
-  flex-grow: 1;
-  flex-basis: 100%;
-  @container column (width > 40rem) {
-    flex-basis: calc(50% - var(--col-layout-col-gap, 0px) / 2);
-  }
-  @container column (width > 48rem) {
-    flex-basis: calc(25% - var(--col-layout-col-gap, 0px) * 3);
+  --col-layout-col-gap: 0px;
+  --col-layout-row-gap: 0px;
+  --col-width: 3;
+  .col {
+    grid-column: span var(--col-width);
   }
 }

@@ -1,9 +1,8 @@
 .column-layout.column-layout--single {
-  flex-direction: column;
-  flex-wrap: nowrap;
-  flex: 1;
+  --col-layout-col-gap: 0px;
+  --col-layout-row-gap: 0px;
+  --col-width-1: 12;
   .col {
-    display: flex;
-    flex-direction: column;
+    grid-column: span var(--col-width-1);
   }
 }

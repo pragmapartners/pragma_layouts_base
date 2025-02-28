@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\pragma_layouts\Plugin\Layout;
+namespace Drupal\pragma_layouts_base\Plugin\Layout;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Layout\LayoutDefault;

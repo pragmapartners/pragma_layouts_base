@@ -1,10 +1,10 @@
-pragma_layouts_onecol:
+pragma_layouts_base_onecol:
   label: "One column"
   category: "Pragma layouts"
-  class: '\Drupal\pragma_layouts\Plugin\Layout\SingleColumn'
+  class: '\Drupal\pragma_layouts_base\Plugin\Layout\SingleColumn'
   path: layouts/onecol
   template: onecol
-  library: pragma_layouts/onecol
+  library: pragma_layouts_base/onecol
   regions:
     first:
       label: Column
@@ -13,13 +13,13 @@ pragma_layouts_onecol:
     - [first]
   classname: single
 
-pragma_layouts_twocol:
+pragma_layouts_base_twocol:
   label: "Two columns"
   category: "Pragma layouts"
-  class: '\Drupal\pragma_layouts\Plugin\Layout\DoubleColumn'
+  class: '\Drupal\pragma_layouts_base\Plugin\Layout\DoubleColumn'
   path: layouts/twocol
   template: twocol
-  library: pragma_layouts/twocol
+  library: pragma_layouts_base/twocol
   regions:
     first:
       label: First column
@@ -30,13 +30,13 @@ pragma_layouts_twocol:
     - [first, second]
   classname: double
 
-pragma_layouts_threecol:
+pragma_layouts_base_threecol:
   label: "Three columns"
   category: "Pragma layouts"
-  class: '\Drupal\pragma_layouts\Plugin\Layout\TripleColumn'
+  class: '\Drupal\pragma_layouts_base\Plugin\Layout\TripleColumn'
   path: layouts/threecol
   template: threecol
-  library: pragma_layouts/threecol
+  library: pragma_layouts_base/threecol
   regions:
     first:
       label: First column
@@ -49,13 +49,13 @@ pragma_layouts_threecol:
     - [first, second, third]
   classname: triple
 
-pragma_layouts_fourcol:
+pragma_layouts_base_fourcol:
   label: "Four columns"
   category: "Pragma layouts"
-  class: '\Drupal\pragma_layouts\Plugin\Layout\QuadColumn'
+  class: '\Drupal\pragma_layouts_base\Plugin\Layout\QuadColumn'
   path: layouts/fourcol
   template: fourcol
-  library: pragma_layouts/fourcol
+  library: pragma_layouts_base/fourcol
   regions:
     first:
       label: First column

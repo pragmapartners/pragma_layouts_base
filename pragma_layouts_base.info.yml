@@ -1,4 +1,4 @@
-name: "pragma layouts"
+name: "pragma layouts base"
 type: module
 description: "Basic layouts for Drupal's Layout API"
 package: "Pragma"

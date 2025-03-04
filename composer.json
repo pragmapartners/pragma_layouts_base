@@ -1,5 +1,5 @@
 {
-  "name": "pragmapartners/pragma-layouts",
+  "name": "pragmapartners/pragma_layouts_base",
   "description": "a collection of drupal components",
   "type": "drupal-module",
   "license": "MIT",
